@@ -1,4 +1,4 @@
-import { React, useState, useRef } from "react";
+import { React } from "react";
 import styled from "styled-components";
 import { NavItems } from "../../../utils/NavItems";
 import NavItem from "../Elements/NavItem";
@@ -9,8 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { TriangleAlert } from "lucide-react";
 
 function Sidebar({ name = "User" }) {
-  const [logoutUrl, setLogoutUrl] = useState("#");
-  const toast = useRef(null);
   const naviagte = useNavigate();
 
   const accept = () => {
@@ -29,11 +27,9 @@ function Sidebar({ name = "User" }) {
       reject,
     });
   };
-  
 
   return (
     <SidebarStyled>
-      {/* <Toast ref={toast} /> */}
       <ConfirmDialog />
       <ProfileSection>
         <img src={avatar} alt="Profile" className="profile-pic" />
@@ -57,7 +53,7 @@ function Sidebar({ name = "User" }) {
           key={10}
           icon={<LogOut />}
           label={"LogOut"}
-          url={logoutUrl}
+          url={"#"}
           handleClick={confirm1}
         />
       </LogoSection>

@@ -2,7 +2,6 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import Sidebar from "../Dashboard/Elements/Sidebar";
 import { Outlet } from "react-router-dom";
-import MainContent from "../Dashboard/Elements/MainContent";
 
 // Layout component with Sidebar and main content
 const DashboardLayout = ({ name }) => (

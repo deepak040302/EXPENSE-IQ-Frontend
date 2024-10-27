@@ -1,5 +1,5 @@
 // Logout.js
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthProvider'; // Adjust the path to where your AuthProvider is located
 

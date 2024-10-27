@@ -6,7 +6,7 @@ import { useAuth } from "./AuthProvider";
 import { useNavigate } from "react-router-dom";
 
 const SignUpSignIn = () => {
-  const { login, isAuthenticated } = useAuth();
+  const { login } = useAuth();
   const naviagte = useNavigate();
   // const { login } = useAuth();
   const [isRightPanelActive, setRightPanelActive] = useState(false);
@@ -300,7 +300,7 @@ const SignUpSignIn = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <a className="login-a" href="#">
+            <a className="login-a" href="/forgot-password">
               Forgot your password?
             </a>
             <button className="login-button" type="submit">

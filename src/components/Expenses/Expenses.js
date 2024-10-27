@@ -4,7 +4,7 @@ import FormHeader from "./Elements/FormHeader";
 import { useNavigate } from "react-router-dom";
 import { currency } from "../../utils/Currency";
 import { handleDownload } from "../../utils/DocumentDownload";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { confirmDialog } from "primereact/confirmdialog";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

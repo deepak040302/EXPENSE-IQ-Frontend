@@ -9,7 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../Security/AuthProvider";
 import { Trash2, FileOutput } from "lucide-react";
-import { ConfirmDialog, confirmDialog } from "primereact/confirmdialog";
+import { confirmDialog } from "primereact/confirmdialog";
 import { TriangleAlert } from "lucide-react";
 
 export default function Incomes() {
