@@ -124,7 +124,7 @@ export default function ViewTransactions() {
 
   return (
     <TableContainer>
-      <ToastContainer theme="dark" />
+      <ToastContainer theme="dark" position="top-right" autoClose={1500} />
       <Header>
         <FormHeader title="All Latest Transactions" />
         <SearchBar

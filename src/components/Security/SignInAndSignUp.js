@@ -226,8 +226,7 @@ const SignUpSignIn = () => {
 
   return (
     <div className="login-sign-up-body">
-      <ToastContainer position="top-right" autoClose={1500} />
-
+      <ToastContainer theme="dark" position="top-right" autoClose={1500} />
       <div
         className={`login-container ${
           isRightPanelActive ? "right-panel-active" : ""

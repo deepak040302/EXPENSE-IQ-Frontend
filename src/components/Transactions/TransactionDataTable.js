@@ -23,36 +23,58 @@ const TransactionDataTable = ({
       loading={isDataLoaded}
       emptyMessage={emptyMessage}
       loadingIcon={<ProgressSpinner />}
+      removableSort
+      scrollable
     >
       <Column
         field="id"
         header="Sr. No."
         body={(rowData, { rowIndex }) => rowIndex + 1}
         headerStyle={headerStyle}
+        sortable
       />
       <Column
         field="subject"
         header="Transaction Title"
         headerStyle={headerStyle}
+        sortable
+        frozen
       />
 
-      <Column field="merchant" header="Merchant" headerStyle={headerStyle} />
+      <Column
+        field="merchant"
+        header="Merchant"
+        headerStyle={headerStyle}
+        sortable
+      />
 
       <Column
         field="total"
         header="Amount"
         body={(rowData) => `${currency} ${rowData.total}`}
         headerStyle={headerStyle}
+        sortable
       />
 
-      <Column field="createdDate" header="Date" headerStyle={headerStyle} />
+      <Column
+        field="createdDate"
+        header="Date"
+        headerStyle={headerStyle}
+        sortable
+      />
 
-      <Column field="category" header="Category" headerStyle={headerStyle} />
+      <Column
+        field="category"
+        header="Category"
+        headerStyle={headerStyle}
+        sortable
+      />
 
       <Column
         field="transactionType"
         header="Transaction Type"
         headerStyle={headerStyle}
+        sortable
       />
       <Column
         header="Invoice"
