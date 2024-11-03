@@ -67,6 +67,10 @@ const SidebarStyled = styled.div`
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 768px) {
+    display: none; // Hide sidebar on small screens
+  }
 `;
 
 const ProfileSection = styled.div`

@@ -8,25 +8,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FileOutput } from "lucide-react";
 import { useAuth } from "../Security/AuthProvider";
+import TransactionDataTable from "./TransactionDataTable";
 
 export default function ViewTransactions() {
   const { logout, loogedInUsername } = useAuth();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [transactions, setTransactions] = useState([
-    {
-      category: "Groceries",
-      createdDate: "2024-10-10",
-      description: "sf",
-      document: null,
-      id: 35,
-      merchant: "fad",
-      subject: "deepak",
-      total: 32,
-    },
-  ]);
-
-  const [searchTerm, setSearchTerm] = useState(""); // For managing search input
-  const rowsPerPage = 6;
+  const [isDataLoaded, setIsDataLoaded] = useState(true);
+  const [transactions, setTransactions] = useState([]);
+  const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -67,10 +56,10 @@ export default function ViewTransactions() {
           .sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
 
         setTransactions(allLatestTransactions);
+        setFilteredTransactions(allLatestTransactions); // Set initial filtered transactions
+        setIsDataLoaded(false);
 
-
-        console.log("  ddd "  + loogedInUsername);
-        
+        console.log("  ddd " + loogedInUsername);
       } catch (error) {
         if (error.response && error.response.status === 401) {
           toast.error("Unauthorized - Please Login or SignUp to access.");
@@ -84,38 +73,25 @@ export default function ViewTransactions() {
     };
 
     fetchTransactions();
-  }, [logout]);
+  }, [logout, loogedInUsername]); // Remove searchTerm from dependency array
 
-  // Filter transactions based on search term
-  const filteredTransactions = transactions.filter(
-    (transaction) =>
-      transaction.merchant.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      transaction.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      transaction.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      transaction.total
-        .toString()
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      transaction.transactionType
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-  );
-
-  // Calculate total number of pages for filtered transactions
-  const totalPages = Math.ceil(filteredTransactions.length / rowsPerPage);
-
-  // Get current rows to display
-  const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentRows = filteredTransactions.slice(
-    startIndex,
-    startIndex + rowsPerPage
-  );
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  useEffect(() => {
+    // Filter transactions based on search term whenever it changes
+    const filtered = transactions.filter(
+      (transaction) =>
+        transaction.merchant.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transaction.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transaction.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transaction.total
+          .toString()
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        transaction.transactionType
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase())
+    );
+    setFilteredTransactions(filtered);
+  }, [searchTerm, transactions]); // Filter transactions when searchTerm or transactions change
 
   const handleDocumentDownload = (id, transactionType, fileName) => {
     handleDownload(id, transactionType, fileName)
@@ -132,12 +108,25 @@ export default function ViewTransactions() {
       });
   };
 
+  const renderDownloadButton = (rowData) => (
+    <ClickableTd
+      onClick={() =>
+        handleDocumentDownload(
+          rowData.id,
+          rowData.transactionType,
+          rowData.subject
+        )
+      }
+    >
+      <FileOutput />
+    </ClickableTd>
+  );
+
   return (
     <TableContainer>
       <ToastContainer theme="dark" />
       <Header>
         <FormHeader title="All Latest Transactions" />
-
         <SearchBar
           type="text"
           placeholder="Search transactions..."
@@ -145,70 +134,14 @@ export default function ViewTransactions() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
       </Header>
-
-      {/* Search Input */}
-
       <hr />
-
-      <Table>
-        <thead>
-          <tr className="text-gray-400 text-sm uppercase">
-            <Th>Sr. No.</Th>
-            <Th>Transaction Title</Th>
-            <Th>Merchant</Th>
-            <Th>Amount</Th>
-            <Th>Date</Th>
-            <Th>Category</Th>
-            <Th>Transaction Type</Th>
-            <Th>Invoice</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentRows.map((transaction, index) => (
-            <TableRow key={index + 1} index={startIndex + index}>
-              <td className="py-4 px-4">{startIndex + index + 1}</td>
-              <td className="py-4 px-4">{transaction.subject}</td>
-              <td className="py-4 px-4">{transaction.merchant}</td>
-              <td className="py-4 px-4">
-                {currency.currencySymbol} {transaction.total}
-              </td>
-              <td className="py-4 px-4">{transaction.createdDate}</td>
-              <td className="py-4 px-4">{transaction.category}</td>
-              <td className="py-4 px-4">{transaction.transactionType}</td>
-              <ClickableTd
-                className="py-4 px-4"
-                onClick={() =>
-                  handleDocumentDownload(
-                    transaction.id,
-                    transaction.transactionType,
-                    transaction.subject
-                  )
-                }
-              >
-                <FileOutput />
-              </ClickableTd>
-            </TableRow>
-          ))}
-        </tbody>
-      </Table>
-
-      <Pagination>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </Pagination>
+      <TransactionDataTable
+        value={filteredTransactions} // Pass filtered transactions to the table
+        isDataLoaded={isDataLoaded}
+        emptyMessage="No Transaction Data Available !!"
+        renderDownloadButton={renderDownloadButton}
+        currency={currency.currencySymbol}
+      />
     </TableContainer>
   );
 }
@@ -231,61 +164,6 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0px;
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const TableRow = styled.tr`
-  background: ${({ index }) => (index % 2 === 0 ? "#374151" : "#4b5563")};
-
-  td {
-    padding: 16px;
-    border: 1px solid #4b5563;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid #4b5563;
-  }
-`;
-
-const Th = styled.th`
-  padding: 16px;
-  border: 1px solid #4b5563;
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-
-  button {
-    background-color: #14b8a6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 0 10px;
-
-    &:hover {
-      background-color: #0f766e;
-    }
-
-    &:disabled {
-      background-color: #4b5563;
-      cursor: not-allowed;
-    }
-  }
-
-  span {
-    color: white;
-    margin: 0 10px;
-  }
 `;
 
 const ClickableTd = styled.td`

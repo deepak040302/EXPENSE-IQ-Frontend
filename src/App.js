@@ -1,7 +1,11 @@
 import "./App.css";
 import DashboardLayout from "./components/Dashboard/Dashboard";
 import { AuthProvider, useAuth } from "./components/Security/AuthProvider";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import AddExpenseForm from "./components/Expenses/AddExpenseForm";
 import AddIncomeForm from "./components/Expenses/AddIncomeForm";
 import MainContent from "./components/Dashboard/Elements/MainContent";
@@ -14,9 +18,8 @@ import Expenses from "./components/Expenses/Expenses";
 import Incomes from "./components/Expenses/Incomes";
 import SignUpSignIn from "./components/Security/SignInAndSignUp";
 import LogOut from "./components/Security/LogOut";
-import 'primereact/resources/themes/saga-blue/theme.css';
-import 'primereact/resources/primereact.min.css';
-
+import "primereact/resources/themes/saga-blue/theme.css";
+import "primereact/resources/primereact.min.css";
 
 function PrivateRoute({ element }) {
   const { isAuthenticated } = useAuth();
@@ -27,7 +30,9 @@ function PrivateRoute({ element }) {
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <PrivateRoute element={<DashboardLayout name="Deepak Nishad" />} />,
+    element: (
+      <PrivateRoute element={<DashboardLayout name="Deepak Nishad" />} />
+    ),
     children: [
       { path: "/", element: <MainContent /> },
       { path: "/expense", element: <Expenses /> },

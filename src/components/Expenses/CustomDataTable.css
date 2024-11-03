@@ -1,0 +1,43 @@
+.p-datatable .p-datatable-tbody > tr:nth-child(odd) {
+    background-color: #374151; /* light grey */
+    color: white;
+}
+
+.p-datatable .p-datatable-tbody > tr:nth-child(even) {
+    background-color: #4b5563; /* white */
+    color: white;
+}
+
+/* Change border color for the table grid lines */
+.p-datatable .p-datatable-tbody > tr > td {
+    border-color: #4b5563; /* Set this to your desired color */
+}
+
+/* Change border color for header row */
+.p-datatable .p-datatable-thead > tr > th {
+    border-color: #4b5563; /* Same or different color for header */
+}
+
+/* Change border color for footer row (if using footer) */
+.p-datatable .p-datatable-tfoot > tr > td {
+    border-color: #4b5563; /* Same or different color for footer */
+}
+
+/* Change the background color of the paginator */
+.p-datatable .p-paginator {
+    background-color: #111827; /* Set your desired color here */
+    border-color: #4b5563;
+    color: white;
+}
+
+/* Change background and color of paginator buttons */
+.p-datatable .p-paginator .p-paginator-element {
+    background-color: #14b8a6; /* Button background color */
+    color: #fff; /* Button text color */
+}
+
+/* Add hover effect */
+.p-datatable .p-paginator .p-paginator-element:hover {
+    background-color: #d0d0d0; /* Hover color */
+}
+

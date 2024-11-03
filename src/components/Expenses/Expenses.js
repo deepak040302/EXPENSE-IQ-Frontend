@@ -11,11 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { FileOutput, Trash2 } from "lucide-react";
 import { useAuth } from "../Security/AuthProvider";
 import { TriangleAlert } from "lucide-react";
+import CustomDataTable from "./CustomDataTable";
 
 export default function Expenses() {
   const { logout } = useAuth();
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
+  const [isDataLoaded, setIsDataLoaded] = useState(true);
   const [expenses, setExpenses] = useState([
     {
       category: "Groceries",
@@ -28,8 +29,6 @@ export default function Expenses() {
       total: 32,
     },
   ]);
-
-  const rowsPerPage = 6;
 
   const fetchExpenses = async () => {
     const token = localStorage.getItem("token");
@@ -53,6 +52,7 @@ export default function Expenses() {
       );
 
       setExpenses(expensesData);
+      setIsDataLoaded(false);
     } catch (error) {
       if (error.response && error.response.status === 401) {
         toast.error("Unauthorized - Please Login or SignUp to access.");
@@ -69,22 +69,7 @@ export default function Expenses() {
     fetchExpenses();
   }, []);
 
-  // Calculate total number of pages
-  const totalPages = Math.ceil(expenses.length / rowsPerPage);
-
-  // Get current rows to display
-  const startIndex = (currentPage - 1) * rowsPerPage;
-  const currentRows = expenses.slice(startIndex, startIndex + rowsPerPage);
-
-  const handleNewExpenseClick = () => {
-    navigate("/new-expense");
-  };
-
-  const handlePageChange = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  const handleNewExpenseClick = () => navigate("/new-expense");
 
   const handleDocumentDownload = (id, transactionType, fileName) => {
     handleDownload(id, transactionType, fileName)
@@ -139,7 +124,7 @@ export default function Expenses() {
     }
   };
 
-    const confirm = (incomeId) => {
+  const confirmDelete = (incomeId) => {
     confirmDialog({
       message: "Are you sure you want to delete?",
       header: "Delete Confirmation",
@@ -156,6 +141,22 @@ export default function Expenses() {
 
   const reject = () => {};
 
+  const renderDeleteButton = (rowData) => (
+    <DeleteTd onClick={() => confirmDelete(rowData.id)}>
+      <Trash2 />
+    </DeleteTd>
+  );
+
+  const renderDownloadButton = (rowData) => (
+    <ClickableTd
+      onClick={() =>
+        handleDocumentDownload(rowData.id, "Expense", rowData.subject)
+      }
+    >
+      <FileOutput />
+    </ClickableTd>
+  );
+
   return (
     <TableContainer>
       <ToastContainer theme="dark" position="top-right" autoClose={1500} />
@@ -168,68 +169,14 @@ export default function Expenses() {
 
       <hr />
 
-      <Table>
-        <thead>
-          <tr className="text-gray-400 text-sm uppercase">
-            <Th>Sr. No.</Th>
-            <Th>Expense Title</Th>
-            <Th>Merchant</Th>
-            <Th>Amount</Th>
-            <Th>Date</Th>
-            <Th>Category</Th>
-            <Th>Description</Th>
-            <Th>Invoice</Th>
-            <Th>Delete</Th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentRows.map((expense, index) => (
-            <TableRow key={index + 1} index={startIndex + index}>
-              <td className="py-4 px-4">{startIndex + index + 1}</td>
-              <td className="py-4 px-4">{expense.subject}</td>
-              <td className="py-4 px-4">{expense.merchant}</td>
-              <td className="py-4 px-4">
-                {currency.currencySymbol} {expense.total}
-              </td>
-              <td className="py-4 px-4">{expense.createdDate}</td>
-              <td className="py-4 px-4">{expense.category}</td>
-              <td className="py-4 px-4">{expense.description}</td>
-              <ClickableTd
-                className="py-4 px-4"
-                onClick={() =>
-                  handleDocumentDownload(expense.id, "Expense", expense.subject)
-                }
-              >
-                <FileOutput />
-              </ClickableTd>
-              <DeleteTd
-                className="py-4 px-4"
-                onClick={() => confirm(expense.id)}
-              >
-                <Trash2 />
-              </DeleteTd>
-            </TableRow>
-          ))}
-        </tbody>
-      </Table>
-
-      <Pagination>
-        <button
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </button>
-        <span>
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </button>
-      </Pagination>
+      <CustomDataTable
+        value={expenses}
+        isDataLoaded={isDataLoaded}
+        emptyMessage="No Expense Data Available !!"
+        renderDownloadButton={renderDownloadButton}
+        renderDeleteButton={renderDeleteButton}
+        currency={currency.currencySymbol}
+      />
     </TableContainer>
   );
 }
@@ -274,61 +221,6 @@ const NewExpenseButton = styled.button`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
-  }
-`;
-
-const Table = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-`;
-
-const TableRow = styled.tr`
-  background: ${({ index }) => (index % 2 === 0 ? "#374151" : "#4b5563")};
-
-  td {
-    padding: 16px;
-    border: 1px solid #4b5563;
-  }
-
-  &:not(:last-child) {
-    border-bottom: 1px solid #4b5563;
-  }
-`;
-
-const Th = styled.th`
-  padding: 16px;
-  border: 1px solid #4b5563;
-`;
-
-const Pagination = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-
-  button {
-    background-color: #14b8a6;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 0 10px;
-
-    &:hover {
-      background-color: #0f766e;
-    }
-
-    &:disabled {
-      background-color: #4b5563;
-      cursor: not-allowed;
-    }
-  }
-
-  span {
-    color: white;
-    margin: 0 10px;
   }
 `;
 
