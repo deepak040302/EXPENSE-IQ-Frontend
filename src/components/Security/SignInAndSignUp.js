@@ -4,12 +4,26 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "./AuthProvider";
 import { useNavigate } from "react-router-dom";
+import { Password } from "primereact/password";
+import { Divider } from "primereact/divider";
 
 const SignUpSignIn = () => {
   const { login } = useAuth();
   const naviagte = useNavigate();
-  // const { login } = useAuth();
   const [isRightPanelActive, setRightPanelActive] = useState(false);
+  const header = <div className="font-bold mb-3">Pick a password</div>;
+  const footer = (
+    <>
+      <Divider />
+      <p className="mt-2">Suggestions</p>
+      <ul className="pl-2 ml-2 mt-0 line-height-3">
+        <li>At least one lowercase</li>
+        <li>At least one uppercase</li>
+        <li>At least one numeric</li>
+        <li>Minimum 8 characters</li>
+      </ul>
+    </>
+  );
 
   // for login
   const [username, setUsername] = useState("");
@@ -125,32 +139,37 @@ const SignUpSignIn = () => {
     }
 
     // Proceed with form submission
-    const response = await fetch("http://localhost:8081/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        fullName: SignUpFullName,
-        username: SignUpUsername,
-        password: SignUpPassword,
-        email: SignUpEmail,
-        country: selectedCountry,
-        currencySymbol: currencySymbol,
-      }),
-    });
-
-    if (response.ok) {
-      toast.success("Signup successful!");
-
-      setTimeout(() => {
-        handleLoginSubmit(null, {
+    try {
+      const response = await fetch("http://localhost:8081/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: SignUpFullName,
           username: SignUpUsername,
           password: SignUpPassword,
-        });
-      }, 2000);
-    } else {
-      toast.error("Signup failed!");
+          email: SignUpEmail,
+          country: selectedCountry,
+          currencySymbol: currencySymbol,
+        }),
+      });
+
+      if (response.ok) {
+        toast.success("Signup successful!");
+
+        setTimeout(() => {
+          handleLoginSubmit(null, {
+            username: SignUpUsername,
+            password: SignUpPassword,
+          });
+        }, 2000);
+      } else {
+        toast.error("Signup failed!");
+      }
+    } catch (e) {
+      toast.error("Signup Failed!");
+      toast.error("Server Side Issue. Please try after sometime.");
     }
   };
 
@@ -159,31 +178,34 @@ const SignUpSignIn = () => {
     if (e) e.preventDefault();
 
     const loginData = userToLogin || { username, password };
+    try {
+      const response = await fetch("http://localhost:8081/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(loginData),
+      });
 
-    const response = await fetch("http://localhost:8081/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(loginData),
-    });
+      const data = await response.json();
 
-    const data = await response.json();
-
-    if (response.ok) {
-      localStorage.setItem("token", data.token);
-      setUsername("");
-      setPassword("");
-      toast.success("Login successful!");
-      setTimeout(() => {
-        login(); // Call login function from context
-        naviagte("/");
-      }, 2000);      
-
-    } else if (response.status === 403) {
-      toast.warn("Invalid Username or Password !!");
-    } else {
-      toast.error("Login failed!");
+      if (response.ok) {
+        localStorage.setItem("token", data.token);
+        setUsername("");
+        setPassword("");
+        toast.success("Login successful!");
+        setTimeout(() => {
+          login(); // Call login function from context
+          naviagte("/");
+        }, 2000);
+      } else if (response.status === 403) {
+        toast.warn("Invalid Username or Password !!");
+      } else {
+        toast.error("Login failed!");
+      }
+    } catch (e) {
+      toast.error("SignIn Failed!");
+      toast.error("Server Side Issue. Please try after sometime.");
     }
   };
 
@@ -214,7 +236,7 @@ const SignUpSignIn = () => {
       >
         <div className="login-form-container sign-up-container">
           <form className="login-form" onSubmit={handleSignUpSubmit}>
-            <h1 className="login-h1" style={{ margin: "10px" }}>
+            <h1 className="login-h1" style={{ margin: "1rem" }}>
               Create new account
             </h1>
             <input
@@ -240,21 +262,26 @@ const SignUpSignIn = () => {
               value={SignUpUsername}
               onChange={(e) => setSignUpUsername(e.target.value)}
               required
+              toogleMask
             />
-            <input
-              className="login-input"
-              type="password"
-              placeholder="Password"
+
+            <Password
+              placeholder="Create a password"
               value={SignUpPassword}
               onChange={(e) => setSignUpPassword(e.target.value)}
+              header={header}
+              footer={footer}
+              toggleMask
               required
             />
-            <input
-              className="login-input"
-              type="password"
+
+            <Password
               placeholder="Confirm Password"
               value={SignUpConfirmPassword}
               onChange={(e) => setSignUpConfirmPassword(e.target.value)}
+              header={header}
+              footer={footer}
+              toggleMask
               required
             />
 
@@ -273,7 +300,11 @@ const SignUpSignIn = () => {
               ))}
             </select>
 
-            <button className="login-button" type="submit">
+            <button
+              className="login-button"
+              type="submit"
+              style={{ margin: "1rem" }}
+            >
               Sign Up
             </button>
           </form>
