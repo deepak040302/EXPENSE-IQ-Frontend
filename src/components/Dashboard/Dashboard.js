@@ -23,7 +23,7 @@ const DashboardLayout = ({ name, userImage }) => {
 
   return (
     <DashboardStyled>
-      {isMobile && <TopNavBar companyName="EXPENSE IQ" userImage={userImage} />}
+      {isMobile && <TopNavBar companyName="EXPENSE IQ" userImage={userImage} userName={name}/>}
       {isMobile ? <BottomNavBar /> : <Sidebar name={name} />}
       <MainContentStyled>
         <Outlet />

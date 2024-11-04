@@ -1,5 +1,5 @@
 import { transactions } from "./Icon";
-import { CreditCard, Home, Settings, Users , Banknote} from "lucide-react";
+import { CreditCard, Home, Settings, Users, Banknote } from "lucide-react";
 export const NavItems = [
   {
     id: 1,

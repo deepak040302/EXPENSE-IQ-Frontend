@@ -146,7 +146,7 @@ export default function ViewTransactions() {
   );
 }
 
-// Styled Components (unchanged)
+// Styled Components (responsive styles added)
 const TableContainer = styled.div`
   background: #111827;
   color: white;
@@ -156,14 +156,25 @@ const TableContainer = styled.div`
   border: 2px solid #4b5563;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  overflow-x: auto; /* Allow horizontal scrolling on small screens */
+  
+  @media (max-width: 600px) {
+    padding: 2%; /* Reduce padding on smaller screens */
+  }
 `;
 
 const Header = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column; /* Change to column for better layout on small screens */
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start; /* Align items to the start */
   margin-bottom: 0px;
+
+  @media (min-width: 601px) {
+    flex-direction: row; /* Use row layout on larger screens */
+    justify-content: space-between;
+    width: 100%; /* Ensure full width on larger screens */
+  }
 `;
 
 const ClickableTd = styled.td`
@@ -179,9 +190,9 @@ const ClickableTd = styled.td`
   }
 `;
 
-// New SearchBar component
+// New SearchBar component with responsive styles
 const SearchBar = styled.input`
-  width: 20%;
+  width: 100%; /* Full width on smaller screens */
   padding: 1%;
   margin-bottom: 1%;
   border-radius: 8px;
@@ -189,4 +200,12 @@ const SearchBar = styled.input`
   background-color: #374151;
   color: white;
   font-size: 1rem;
+  height: 3rem;
+  padding: 1rem;
+
+  @media (min-width: 601px) {
+    width: 20%; /* Fixed width on larger screens */
+    height: 3rem;
+    padding: 1%;
+  }
 `;

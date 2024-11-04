@@ -138,9 +138,9 @@ export default function Incomes() {
       <ToastContainer theme="dark" position="top-right" autoClose={1500} />
       <Header>
         <FormHeader title="Incomes" />
-        <NewExpenseButton onClick={handleNewExpenseClick}>
+        <NewIncomeButton onClick={handleNewExpenseClick}>
           + New Income
-        </NewExpenseButton>
+        </NewIncomeButton>
       </Header>
 
       <hr />
@@ -167,6 +167,11 @@ const TableContainer = styled.div`
   border: 2px solid #4b5563;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 768px) {
+    padding: 2%;
+    border: 1px solid #4b5563;
+  }
 `;
 
 const Header = styled.div`
@@ -174,9 +179,14 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
-const NewExpenseButton = styled.button`
+const NewIncomeButton = styled.button`
   background-color: #14b8a6;
   color: white;
   border: none;
@@ -189,12 +199,20 @@ const NewExpenseButton = styled.button`
 
   &:hover {
     background-color: #14b8a6;
-    transform: scale(1.1);
+    transform: scale(1.03);
   }
 
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    margin-top: 10px;
+    padding: 8px;
+    font-size: 1rem;
+    height: 3rem;
   }
 `;
 

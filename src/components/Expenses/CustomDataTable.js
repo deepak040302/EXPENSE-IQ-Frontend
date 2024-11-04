@@ -33,13 +33,13 @@ const CustomDataTable = ({
         body={(rowData, { rowIndex }) => rowIndex + 1}
         headerStyle={headerStyle}
         sortable
+        frozen
       />
       <Column
         field="subject"
         header="Income Title"
         headerStyle={headerStyle}
         sortable
-        frozen
       />
       <Column
         field="merchant"

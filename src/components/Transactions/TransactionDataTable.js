@@ -32,13 +32,13 @@ const TransactionDataTable = ({
         body={(rowData, { rowIndex }) => rowIndex + 1}
         headerStyle={headerStyle}
         sortable
+        frozen
       />
       <Column
         field="subject"
         header="Transaction Title"
         headerStyle={headerStyle}
         sortable
-        frozen
       />
 
       <Column

@@ -12,28 +12,28 @@ const BottomNavBar = () => {
     setActiveTab(tab);
 
     switch (tab) {
-        case "home":
-            naviagte("/");
-            break;
+      case "home":
+        naviagte("/");
+        break;
 
-        case "transactions":
-            naviagte("/view-transactions");
-            break;
+      case "transactions":
+        naviagte("/view-transactions");
+        break;
 
-        case "incomes":
-            naviagte("/income");
-            break;
-            
-        case "expenses":
-            naviagte("/expense");
-            break;
-            
-        case "settings":
-            naviagte("/settings");
-            break;
+      case "incomes":
+        naviagte("/income");
+        break;
 
-        default:
-            break;
+      case "expenses":
+        naviagte("/expense");
+        break;
+
+      case "settings":
+        naviagte("/settings");
+        break;
+
+      default:
+        break;
     }
   };
 
@@ -48,7 +48,9 @@ const BottomNavBar = () => {
           <span>{<Home />}</span>
         </li>
         <li
-          className={`transactions ${activeTab === "transactions" ? "active" : ""}`}
+          className={`transactions ${
+            activeTab === "transactions" ? "active" : ""
+          }`}
           onClick={() => handleTabClick("transactions")}
           data-where="transactions"
         >
@@ -59,21 +61,21 @@ const BottomNavBar = () => {
           onClick={() => handleTabClick("incomes")}
           data-where="incomes"
         >
-          <span className="material-icons-outlined">{<Banknote/>}</span>
+          <span className="material-icons-outlined">{<Banknote />}</span>
         </li>
         <li
           className={`expenses ${activeTab === "expenses" ? "active" : ""}`}
           onClick={() => handleTabClick("expenses")}
           data-where="expenses"
         >
-          <span className="material-icons-outlined">{<CreditCard/>}</span>
+          <span className="material-icons-outlined">{<CreditCard />}</span>
         </li>
         <li
           className={`settings ${activeTab === "settings" ? "active" : ""}`}
           onClick={() => handleTabClick("settings")}
           data-where="settings"
         >
-          <span className="material-icons-outlined">{<Settings/>}</span>
+          <span className="material-icons-outlined">{<Settings />}</span>
         </li>
       </ul>
     </div>

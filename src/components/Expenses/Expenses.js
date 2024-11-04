@@ -181,7 +181,7 @@ export default function Expenses() {
   );
 }
 
-// Styled Components (unchanged)
+// Styled Components
 const TableContainer = styled.div`
   background: #111827;
   color: white;
@@ -191,6 +191,11 @@ const TableContainer = styled.div`
   border: 2px solid #4b5563;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 768px) {
+    padding: 2%; // Reduced padding for smaller screens
+    border: 1px solid #4b5563; // Adjusted border for smaller screens
+  }
 `;
 
 const Header = styled.div`
@@ -199,6 +204,11 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0px;
+
+  @media (max-width: 768px) {
+    flex-direction: column; // Change layout to column for smaller screens
+    align-items: flex-start; // Align items to the start for better spacing
+  }
 `;
 
 const NewExpenseButton = styled.button`
@@ -215,12 +225,20 @@ const NewExpenseButton = styled.button`
 
   &:hover {
     background-color: #14b8a6;
-    transform: scale(1.1);
+    transform: scale(1.03);
   }
 
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+
+  @media (max-width: 768px) {
+    width: 100%; // Full-width button on smaller screens
+    margin-top: 10px; // Added margin for separation
+    padding: 8px; // Adjusted padding for smaller screens
+    font-size: 1rem; // Increased font size for better readability
+    height: 3rem;
   }
 `;
 
