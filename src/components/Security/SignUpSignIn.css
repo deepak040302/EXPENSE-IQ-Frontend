@@ -41,8 +41,8 @@
 
 .login-button {
   border-radius: 20px;
-  border: 1px solid #ff4b2b;
-  background-color: #ff4b2b;
+  border: 1px solid #0059b3;
+  background: -webkit-linear-gradient(left, #003366, #004080, #0059b3, #0073e6);
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -63,7 +63,7 @@
 
 .login-button.ghost {
   background-color: transparent;
-  border-color: #ffffff;
+  border-color: #0059b3;
 }
 
 .login-form {
@@ -104,8 +104,6 @@
   font-size: 0.85rem;
   height: 3rem;
 }
-
-
 
 .login-container {
   background-color: #fff;

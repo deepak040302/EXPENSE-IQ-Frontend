@@ -17,13 +17,20 @@ import Trip from "./components/Trip/Trip";
 import Expenses from "./components/Expenses/Expenses";
 import Incomes from "./components/Expenses/Incomes";
 import SignUpSignIn from "./components/Security/SignInAndSignUp";
+import LoginSignUpFormForSmallScreens from "./components/Security/LoginSignUpFormForSmallScreens";
 import LogOut from "./components/Security/LogOut";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
+import { useMediaQuery } from "react-responsive";
 
 function PrivateRoute({ element }) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? element : <Navigate to="/login" replace />;
+}
+
+function LoginComponent() {
+  const isSmallScreen = useMediaQuery({ maxWidth: 768 });
+  return isSmallScreen ? <LoginSignUpFormForSmallScreens /> : <SignUpSignIn />;
 }
 
 // Define routes with route guards
@@ -49,7 +56,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <SignUpSignIn />, // Render the full login page here
+    element: <LoginComponent />, // Conditionally render login component based on screen size
   },
 ]);
 
