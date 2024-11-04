@@ -196,9 +196,9 @@ const LoginSignUpFormForSmallScreens = () => {
             className="title login"
             style={{ marginLeft: isSignup ? "-50%" : "0%" }}
           >
-            Login Form
+            Sign In
           </div>
-          <div className="title signup">Signup Form</div>
+          <div className="title signup">Sign Up</div>
         </div>
         <div className="form-container">
           <div className="slide-controls">
@@ -221,14 +221,14 @@ const LoginSignUpFormForSmallScreens = () => {
               className="slide login"
               onClick={() => setIsSignup(false)}
             >
-              Login
+              Sign In
             </label>
             <label
               htmlFor="signup"
               className="slide signup"
               onClick={() => setIsSignup(true)}
             >
-              Signup
+              Sign Up
             </label>
             <div className="slider-tab"></div>
           </div>
@@ -278,7 +278,7 @@ const LoginSignUpFormForSmallScreens = () => {
                     handleSlideClick(true);
                   }}
                 >
-                  Signup now
+                  SignUp Now
                 </a>
               </div>
             </form>
@@ -353,7 +353,7 @@ const LoginSignUpFormForSmallScreens = () => {
 
               <div className="field btn">
                 <div className="btn-layer"></div>
-                <input type="submit" value="Signup" />
+                <input type="submit" value="Create New Account" />
               </div>
             </form>
           </div>
