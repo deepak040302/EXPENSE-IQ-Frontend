@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./BottomNavBar.css";
 import { useNavigate } from "react-router-dom";
-import { CreditCard, Home, Settings, Users, Banknote } from "lucide-react";
+import { CreditCard, Home, Settings, Banknote } from "lucide-react";
 import { transactions } from "../../utils/Icon";
 
 const BottomNavBar = () => {

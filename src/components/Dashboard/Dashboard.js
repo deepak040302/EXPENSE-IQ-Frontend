@@ -23,7 +23,13 @@ const DashboardLayout = ({ name, userImage }) => {
 
   return (
     <DashboardStyled>
-      {isMobile && <TopNavBar companyName="EXPENSE IQ" userImage={userImage} userName={name}/>}
+      {isMobile && (
+        <TopNavBar
+          companyName="EXPENSE-IQ"
+          userImage={userImage}
+          userName={name}
+        />
+      )}
       {isMobile ? <BottomNavBar /> : <Sidebar name={name} />}
       <MainContentStyled>
         <Outlet />
@@ -48,11 +54,11 @@ const MainContentStyled = styled.div`
   padding: 0rem 2rem 2rem 2rem;
   overflow-y: auto;
 
-  @media (max-width: 768px) { /* Adjust the breakpoint as needed */
+  @media (max-width: 768px) {
+    /* Adjust the breakpoint as needed */
     padding: 2.5rem; /* Change padding for smaller screens */
   }
 `;
-
 
 DashboardLayout.propTypes = {
   name: PropTypes.string.isRequired,

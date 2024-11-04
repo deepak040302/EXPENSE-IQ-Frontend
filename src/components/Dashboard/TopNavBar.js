@@ -40,7 +40,13 @@ const TopNavBar = ({ companyName, userImage, userName }) => {
       template: () => (
         <div style={{ display: "flex", alignItems: "center" }}>
           <Avatar image={userImage || avatar} size="large" shape="circle" />
-          <span style={{ marginLeft: "0.5rem", fontWeight: "bold" }}>
+          <span
+            style={{
+              marginLeft: "0.5rem",
+              fontWeight: "bold",
+              cursor: "pointer",
+            }}
+          >
             {userName}
           </span>
         </div>
@@ -52,7 +58,12 @@ const TopNavBar = ({ companyName, userImage, userName }) => {
     {
       template: () => (
         <div
-          style={{ display: "flex", height: "3rem", alignItems: "center" }}
+          style={{
+            display: "flex",
+            height: "3rem",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
           onClick={() => naviagte("/settings")}
         >
           <Settings style={{ marginLeft: "1rem" }} />
@@ -68,7 +79,12 @@ const TopNavBar = ({ companyName, userImage, userName }) => {
     {
       template: () => (
         <div
-          style={{ display: "flex", height: "3rem", alignItems: "center" }}
+          style={{
+            display: "flex",
+            height: "3rem",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
           onClick={() => naviagte("/support")}
         >
           <Users style={{ marginLeft: "1rem" }} />
@@ -84,7 +100,12 @@ const TopNavBar = ({ companyName, userImage, userName }) => {
     {
       template: () => (
         <div
-          style={{ display: "flex", height: "3rem", alignItems: "center" }}
+          style={{
+            display: "flex",
+            height: "3rem",
+            alignItems: "center",
+            cursor: "pointer",
+          }}
           onClick={confirm}
         >
           <LogOut style={{ marginLeft: "1rem" }} />
@@ -97,7 +118,9 @@ const TopNavBar = ({ companyName, userImage, userName }) => {
   return (
     <TopNavBarStyled>
       <ConfirmDialog />
-      <div className="company-name">{companyName}</div>
+      <div className="company-name" onClick={() => naviagte("/")}>
+        {companyName}
+      </div>
       <div className="menu-icon" onClick={(e) => menu.current.toggle(e)}>
         <Menu className="menu-bar" />
       </div>
@@ -131,6 +154,14 @@ const TopNavBarStyled = styled.div`
   .company-name {
     font-size: 1.5rem;
     font-weight: bold;
+    color: #14b8a6;
+    cursor: pointer;
+    transition: color 0.5s ease, transform 0.5s ease;
+
+    &:hover {
+      transform: scale(1.1);
+      color: #3b82f6;
+    }
   }
 
   .menu-icon {
@@ -140,8 +171,10 @@ const TopNavBarStyled = styled.div`
 
   .menu-bar {
     transition: color 0.5s ease, transform 0.5s ease;
+    color: #14b8a6;
     &:hover {
       transform: scale(1.5);
+      color: #3b82f6;
     }
   }
 `;

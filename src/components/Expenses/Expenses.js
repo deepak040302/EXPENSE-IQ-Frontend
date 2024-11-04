@@ -65,9 +65,8 @@ export default function Expenses() {
     }
   };
 
-  useEffect(() => {
-    fetchExpenses();
-  }, []);
+  // eslint-disable-next-line
+  useEffect(() => {fetchExpenses();}, []);
 
   const handleNewExpenseClick = () => navigate("/new-expense");
 

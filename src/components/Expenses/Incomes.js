@@ -48,9 +48,8 @@ export default function Incomes() {
     }
   };
 
-  useEffect(() => {
-    fetchIncomes();
-  }, []);
+  // eslint-disable-next-line
+  useEffect(() => {fetchIncomes();}, []);
 
   const navigate = useNavigate();
   const handleNewExpenseClick = () => navigate("/new-income");

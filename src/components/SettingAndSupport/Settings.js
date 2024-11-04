@@ -44,10 +44,8 @@ const Settings = () => {
     }
   };
 
-  useEffect(() => {
-    fetchUserData();
-    fetchCountries();
-  }, []);
+  // eslint-disable-next-line
+  useEffect(() => {fetchUserData();fetchCountries();}, []);
 
   return (
     <FormContainer>
