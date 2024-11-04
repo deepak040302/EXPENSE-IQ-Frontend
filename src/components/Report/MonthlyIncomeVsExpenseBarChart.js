@@ -23,9 +23,10 @@ ChartJS.register(
 
 // Styled-components for the chart container
 const ChartContainer = styled.div`
-  width: 92%;
+  width: 100%; /* Full width to make it responsive */
+  max-width: 600px; /* Maximum width for larger screens */
   height: auto;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the chart container */
   background-color: #f0f0f0; /* Light grey background */
   padding: 20px; /* Add padding for spacing */
   border-radius: 10px; /* Smooth edges */
@@ -34,6 +35,8 @@ const ChartContainer = styled.div`
   canvas {
     background-color: #fff; /* White background for the chart */
     border-radius: 8px;
+    width: 100% !important; /* Make canvas width responsive */
+    height: auto !important; /* Maintain aspect ratio */
   }
 `;
 
@@ -42,7 +45,7 @@ const IncomeExpenseChart = ({ incomeData, expenseData }) => {
   const calculateMonthlyTotals = (data) => {
     const monthlyTotals = {};
     const currentYear = new Date().getFullYear();
-  
+
     data.forEach((item) => {
       const createdDate = new Date(item.createdDate);
       if (createdDate.getFullYear() === currentYear) {
@@ -50,29 +53,27 @@ const IncomeExpenseChart = ({ incomeData, expenseData }) => {
         monthlyTotals[month] = (monthlyTotals[month] || 0) + item.total;
       }
     });
-  
+
     // Sort the months in chronological order
     const sortedMonthlyTotals = {};
     const monthOrder = [
       "January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
     ];
-  
+
     monthOrder.forEach((month) => {
       if (monthlyTotals[month]) {
         sortedMonthlyTotals[month] = monthlyTotals[month];
       }
     });
-  
+
     return sortedMonthlyTotals;
   };
-  
 
-  const incomeTotals = calculateMonthlyTotals(incomeData, "income");
-  const expenseTotals = calculateMonthlyTotals(expenseData, "expense");
+  const incomeTotals = calculateMonthlyTotals(incomeData);
+  const expenseTotals = calculateMonthlyTotals(expenseData);
 
   // Prepare data for the chart
-  // give all the months if data available else empty array
   const labels = Object.keys(incomeTotals).length
     ? Object.keys(incomeTotals)
     : [];
@@ -98,6 +99,7 @@ const IncomeExpenseChart = ({ incomeData, expenseData }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false, // Maintain aspect ratio when resizing
     plugins: {
       legend: { position: "top" },
       title: { display: true, text: `Monthly Income vs Expenses (Year - ${new Date().getFullYear()})` },

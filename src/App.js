@@ -20,6 +20,7 @@ import SignUpSignIn from "./components/Security/SignInAndSignUp";
 import LogOut from "./components/Security/LogOut";
 import "primereact/resources/themes/saga-blue/theme.css";
 import "primereact/resources/primereact.min.css";
+import BottomNavBar from "./components/Dashboard/BottomNavBar";
 
 function PrivateRoute({ element }) {
   const { isAuthenticated } = useAuth();
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
     ),
     children: [
       { path: "/", element: <MainContent /> },
+      { path: "/nav", element: <BottomNavBar /> },
       { path: "/expense", element: <Expenses /> },
       { path: "/new-expense", element: <AddExpenseForm /> },
       { path: "/income", element: <Incomes /> },

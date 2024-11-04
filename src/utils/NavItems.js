@@ -1,5 +1,5 @@
 import { transactions } from "./Icon";
-import { CreditCard, Home, Settings, Users} from "lucide-react";
+import { CreditCard, Home, Settings, Users , Banknote} from "lucide-react";
 export const NavItems = [
   {
     id: 1,
@@ -16,7 +16,7 @@ export const NavItems = [
   {
     id: 3,
     title: "Incomes",
-    icon: <CreditCard />,
+    icon: <Banknote />,
     link: "/income",
   },
   {

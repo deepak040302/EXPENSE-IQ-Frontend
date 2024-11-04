@@ -23,9 +23,10 @@ ChartJS.register(
 
 // Styled-components for the chart container
 const ChartContainer = styled.div`
-  width: 92%;
+  width: 100%; /* Full width for responsiveness */
+  max-width: 600px; /* Maximum width for larger screens */
   height: auto;
-  margin: 0 auto;
+  margin: 0 auto; /* Center the chart container */
   background-color: #f0f0f0; /* Light grey background */
   padding: 20px; /* Add padding for spacing */
   border-radius: 10px; /* Smooth edges */
@@ -34,6 +35,8 @@ const ChartContainer = styled.div`
   canvas {
     background-color: #fff; /* White background for the chart */
     border-radius: 8px;
+    width: 100% !important; /* Make canvas width responsive */
+    height: auto !important; /* Maintain aspect ratio */
   }
 `;
 
@@ -86,9 +89,13 @@ const WeeklyExpenseIncomeBarChart = ({ incomeData, expenseData }) => {
 
   const options = {
     responsive: true,
+    maintainAspectRatio: false, // Maintain aspect ratio when resizing
     plugins: {
       legend: { position: "top" },
-      title: { display: true, text: `Weekly Income vs Expenses (Current Month - ${new Date().toLocaleString('default', { month: 'long' })})`},
+      title: {
+        display: true,
+        text: `Weekly Income vs Expenses (Current Month - ${new Date().toLocaleString('default', { month: 'long' })})`,
+      },
     },
     scales: {
       y: {

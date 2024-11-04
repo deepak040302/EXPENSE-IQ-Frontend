@@ -8,9 +8,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 // Styled-components for the chart container
 const ChartContainer = styled.div`
-  width: 92%;
-  height: auto;
-  margin: 0 auto;
+  width: 100%; /* Full width for responsiveness */
+  max-width: 400px; /* Maximum width for larger screens */
+  height: auto; /* Allow height to adjust automatically */
+  margin: 0 auto; /* Center the chart container */
   background-color: #f0f0f0; /* Light grey background */
   padding: 20px; /* Add padding for spacing */
   border-radius: 10px; /* Smooth edges */
@@ -19,11 +20,13 @@ const ChartContainer = styled.div`
   canvas {
     background-color: #fff; /* White background for the chart */
     border-radius: 8px;
+    width: 100% !important; /* Make canvas width responsive */
+    height: auto !important; /* Maintain aspect ratio */
   }
 `;
 
 const CategoryWiseExpensePieChart = ({ expenseData }) => {
-  // Function to calculate monthly totals
+  // Function to calculate category-wise totals
   const calculateCategoryWiseTotals = (data) => {
     const categoryWiseTotals = {};
 
@@ -33,11 +36,10 @@ const CategoryWiseExpensePieChart = ({ expenseData }) => {
         (categoryWiseTotals[category] || 0) + item.total;
     });
 
-    console.log(categoryWiseTotals);
     return categoryWiseTotals;
   };
 
-  const expenseTotals = calculateCategoryWiseTotals(expenseData, "expense");
+  const expenseTotals = calculateCategoryWiseTotals(expenseData);
 
   const labels = Object.keys(expenseTotals);
 
@@ -68,7 +70,7 @@ const CategoryWiseExpensePieChart = ({ expenseData }) => {
   };
 
   return (
-    <ChartContainer style={{ height: "300px", width: "300px" }}>
+    <ChartContainer>
       <Doughnut data={data} options={options} />
     </ChartContainer>
   );

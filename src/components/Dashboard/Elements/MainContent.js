@@ -14,30 +14,8 @@ import { useAuth } from "../../Security/AuthProvider";
 function MainContent() {
   const { logout } = useAuth();
 
-  const [expenseList, setExpenseList] = useState([
-    {
-      category: "Groceries",
-      createdDate: "2024-10-10",
-      description: "sf",
-      document: null,
-      id: 35,
-      merchant: "fad",
-      subject: "deepak",
-      total: 32,
-    },
-  ]);
-  const [incomeList, setIncomeList] = useState([
-    {
-      category: "Groceries",
-      createdDate: "2024-10-10",
-      description: "sf",
-      document: null,
-      id: 35,
-      merchant: "fad",
-      subject: "deepak",
-      total: 32,
-    },
-  ]);
+  const [expenseList, setExpenseList] = useState([]);
+  const [incomeList, setIncomeList] = useState([]);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [totalBalance, setTotalBalance] = useState(0);
@@ -47,7 +25,6 @@ function MainContent() {
       const token = localStorage.getItem("token");
       if (!token) {
         toast.warn("You are not authenticated!");
-        // navigate("/login");
         return;
       }
 
@@ -69,18 +46,19 @@ function MainContent() {
           }
         );
 
-        const updatedIncomeResponse = incomeResponse.data.map((income) => {
-          return { ...income, transactionType: "Income" };
-        });
+        const updatedIncomeResponse = incomeResponse.data.map((income) => ({
+          ...income,
+          transactionType: "Income",
+        }));
 
-        const updatedExpenseResponse = expenseResponse.data.map((expense) => {
-          return { ...expense, transactionType: "Expense" };
-        });
+        const updatedExpenseResponse = expenseResponse.data.map((expense) => ({
+          ...expense,
+          transactionType: "Expense",
+        }));
 
         setIncomeList(updatedIncomeResponse);
         setExpenseList(updatedExpenseResponse);
 
-        // Calculate total income and total expenses
         const totalIncomeAmount = updatedIncomeResponse.reduce(
           (acc, income) => acc + income.total,
           0
@@ -90,7 +68,6 @@ function MainContent() {
           0
         );
 
-        // Update the state with the totals
         setTotalIncome(totalIncomeAmount.toFixed(2));
         setTotalExpense(totalExpensesAmount.toFixed(2));
         setTotalBalance((totalIncomeAmount - totalExpensesAmount).toFixed(2));
@@ -100,7 +77,7 @@ function MainContent() {
           logout();
         } else {
           console.log("An error occurred:", error);
-          toast.error("Some Error Occured");
+          toast.error("Some Error Occurred");
         }
         console.error("Error fetching transactions:", error);
       }
@@ -111,7 +88,7 @@ function MainContent() {
 
   return (
     <>
-      <ToastContainer/>
+      <ToastContainer />
       <CardStyled>
         <QuickAccess />
       </CardStyled>
@@ -176,15 +153,6 @@ function MainContent() {
               <CategoryWiseIncomePieChart incomeData={incomeList} />
             </PlaceholderChart>
           </div>
-          {/* <div>
-            <h4>Day-to-Day Expenses</h4>
-            <PlaceholderChart>
-              <CategoryWiseExpensePieChart
-                incomeData={incomeList}
-                expenseData={expenseList}
-              />
-            </PlaceholderChart>
-          </div> */}
         </ContentGridPieChart>
       </CardStyled>
     </>
@@ -193,19 +161,20 @@ function MainContent() {
 
 const ContentGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusts for smaller screens */
   gap: 2rem;
   margin-bottom: 3%;
 `;
+
 const ContentGridPieChart = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive layout */
   gap: 2rem;
 `;
 
 const ContentGridBalance = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive layout */
   gap: 2rem;
 `;
 
