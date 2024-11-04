@@ -269,3 +269,11 @@
   border-style: solid;
   border-color: transparent transparent #f44336 transparent;
 } */
+
+@media (max-width: 600px) {
+  .Toastify__toast {
+    font-size: 12px; /* Smaller font size on mobile */
+    padding: 8px; /* Smaller padding on mobile */
+    margin: 3px; /* Smaller margin on mobile */
+  }
+}

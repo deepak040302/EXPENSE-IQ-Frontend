@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap");
 
 .login-signup-form {
+  align-content: center;
   font-family: "Poppins", sans-serif;
   display: grid;
   height: 100vh;
@@ -21,6 +22,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+.wrapper {
+  width: 90%;
 }
 
 ::selection {
@@ -120,7 +124,14 @@ input[type="radio"] {
   width: 100%;
   margin-top: 20px;
 }
-.login-signup-form .form-inner form .field input {
+
+.login-signup-form .form-inner form .p-password input {
+  height: 50px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.login-signup-form .form-inner form .field * {
   height: 100%;
   width: 100%;
   outline: none;
@@ -131,14 +142,43 @@ input[type="radio"] {
   font-size: 17px;
   transition: all 0.3s ease;
 }
-.login-signup-form .form-inner form .field input:focus {
+
+.login-signup-form .form-inner form .p-password input {
+  height: 3.5rem;
+  width: 21.3rem;
+  background-color: white;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 15px;
+  border: 1px solid lightgrey;
+  border-bottom-width: 2px;
+  font-size: 17px;
+  transition: all 0.3s ease;
+}
+
+.login-signup-form .form-inner form .field *:focus {
   border-color: #1a75ff;
 }
-.login-signup-form .form-inner form .field input::placeholder {
+
+.login-signup-form .form-inner form .p-password input:focus {
+  border-color: #1a75ff;
+}
+
+.login-signup-form .form-inner form .field *::placeholder {
   color: #999;
   transition: all 0.3s ease;
 }
-.login-signup-form form .field input:focus::placeholder {
+
+.login-signup-form .form-inner form .p-password input::placeholder {
+  color: #999;
+  transition: all 0.3s ease;
+}
+
+.login-signup-form form .field *:focus::placeholder {
+  color: #1a75ff;
+}
+
+.login-signup-form form .p-password input:focus::placeholder {
   color: #1a75ff;
 }
 .login-signup-form .form-inner form .pass-link {
@@ -213,11 +253,29 @@ input[type="radio"] {
     font-size: 16px;
   }
 
-  .login-signup-form .form-inner form .field input {
+  .login-signup-form .form-inner form .field * {
+    font-size: 16px;
+  }
+
+  .login-signup-form .form-inner form .p-password input {
     font-size: 16px;
   }
 
   .login-signup-form form .btn input[type="submit"] {
     font-size: 18px;
+  }
+}
+
+.custom-password .p-inputtext:focus {
+  border-color: transparent; /* or use the same color as the background */
+  box-shadow: none; /* Remove the shadow if needed */
+}
+/* Media query for mobile screens */
+
+@media (max-width: 600px) {
+  .Toastify__toast {
+    font-size: 12px; /* Smaller font size on mobile */
+    padding: 8px; /* Smaller padding on mobile */
+    margin: 3px; /* Smaller margin on mobile */
   }
 }
