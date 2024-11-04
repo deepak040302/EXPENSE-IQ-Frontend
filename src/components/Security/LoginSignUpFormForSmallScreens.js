@@ -22,6 +22,7 @@ const LoginSignUpFormForSmallScreens = () => {
   const [SignUpConfirmPassword, setSignUpConfirmPassword] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [currencySymbol, setCurrencySymbol] = useState("");
+  // eslint-disable-next-line
   const [errors, setErrors] = useState({});
   const [countries, setCountries] = useState([]);
 
