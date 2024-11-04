@@ -65,7 +65,7 @@ const LoginSignUpFormForSmallScreens = () => {
                 <input type="password" placeholder="Password" required />
               </div>
               <div className="pass-link">
-                <a href="#">Forgot password?</a>
+                <a href="/forgot-password">Forgot password?</a>
               </div>
               <div className="field btn">
                 <div className="btn-layer"></div>
@@ -74,7 +74,7 @@ const LoginSignUpFormForSmallScreens = () => {
               <div className="signup-link">
                 Not a member?{" "}
                 <a
-                  href="#"
+                  href="/"
                   onClick={(e) => {
                     e.preventDefault();
                     handleSlideClick(true);
