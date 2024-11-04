@@ -185,13 +185,17 @@ input[type="radio"] {
   margin-top: 5px;
 }
 .login-signup-form .form-inner form .signup-link {
+  font-size: 150%;
   text-align: center;
   margin-top: 30px;
+  font-weight: bold;
 }
+
 .login-signup-form .form-inner form .pass-link a,
 .login-signup-form .form-inner form .signup-link a {
   color: #1a75ff;
   text-decoration: none;
+  text-decoration:underline;
 }
 .login-signup-form .form-inner form .pass-link a:hover,
 .login-signup-form .form-inner form .signup-link a:hover {

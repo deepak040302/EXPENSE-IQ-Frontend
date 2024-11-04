@@ -266,7 +266,11 @@ const LoginSignUpFormForSmallScreens = () => {
                 <input type="submit" value="Login" />
               </div>
               <div className="signup-link">
-                Not a member?{" "}
+                Not a member? <br />
+                <br />
+                No Worry !! , Enter your personal details and start journey with
+                us <br />
+                <br />
                 <a
                   href="/"
                   onClick={(e) => {
