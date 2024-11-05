@@ -1,5 +1,5 @@
 // TopNavBar.js
-import React, { useRef } from "react";
+import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
@@ -29,7 +29,7 @@ const TopNavBarStyled = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  
+
   .company-name {
     font-size: 1.5rem;
     font-weight: bold;
