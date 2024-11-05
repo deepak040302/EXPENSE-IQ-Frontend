@@ -11,6 +11,7 @@ import { useAuth } from "../Security/AuthProvider";
 
 export default function AddExpenseForm() {
   const { logout } = useAuth();
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
 
   const initialFormData = {
     subject: "",
@@ -58,7 +59,7 @@ export default function AddExpenseForm() {
     }
 
     try {
-      const response = await fetch("http://localhost:8081/api/add-expense", {
+      const response = await fetch(`${API_URL}/api/add-expense`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

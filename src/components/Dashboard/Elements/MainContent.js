@@ -13,6 +13,7 @@ import { useAuth } from "../../Security/AuthProvider";
 
 function MainContent() {
   const { logout } = useAuth();
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
 
   const [expenseList, setExpenseList] = useState([]);
   const [incomeList, setIncomeList] = useState([]);
@@ -30,7 +31,7 @@ function MainContent() {
 
       try {
         const incomeResponse = await axios.get(
-          "http://localhost:8081/api/get-incomes",
+          `${API_URL}/api/get-incomes`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,7 +39,7 @@ function MainContent() {
           }
         );
         const expenseResponse = await axios.get(
-          "http://localhost:8081/api/get-expenses",
+          `${API_URL}/api/get-expenses`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -84,6 +85,8 @@ function MainContent() {
     };
 
     fetchTransactions(); // Fetch data when component mounts
+    
+  // eslint-disable-next-line  
   }, [logout]);
 
   return (

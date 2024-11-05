@@ -6,12 +6,14 @@ import { useAuth } from "./AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
+import TopNavBar from "./TopNav";
 
 const SignUpSignIn = () => {
   const { login } = useAuth();
   const naviagte = useNavigate();
   const [isRightPanelActive, setRightPanelActive] = useState(false);
   const header = <div className="font-bold mb-3">Pick a password</div>;
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
   const footer = (
     <>
       <Divider />
@@ -140,7 +142,7 @@ const SignUpSignIn = () => {
 
     // Proceed with form submission
     try {
-      const response = await fetch("http://localhost:8081/register", {
+      const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -179,7 +181,7 @@ const SignUpSignIn = () => {
 
     const loginData = userToLogin || { username, password };
     try {
-      const response = await fetch("http://localhost:8081/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -225,151 +227,154 @@ const SignUpSignIn = () => {
   };
 
   return (
-    <div className="login-sign-up-body">
-      <ToastContainer theme="dark" position="top-right" autoClose={1500} />
-      <div
-        className={`login-container ${
-          isRightPanelActive ? "right-panel-active" : ""
-        }`}
-        id="login-container"
-      >
-        <div className="login-form-container sign-up-container">
-          <form className="login-form" onSubmit={handleSignUpSubmit}>
-            <h1 className="login-h1" style={{ margin: "1rem" }}>
-              Create new account
-            </h1>
-            <input
-              className="login-input"
-              type="text"
-              placeholder="Full Name"
-              value={SignUpFullName}
-              onChange={(e) => setSignUpFullName(e.target.value)}
-              required
-            />
-            <input
-              className="login-input"
-              type="email"
-              placeholder="Email"
-              value={SignUpEmail}
-              onChange={(e) => setSignUpEmail(e.target.value)}
-              required
-            />
-            <input
-              className="login-input"
-              type="text"
-              placeholder="Create a Username"
-              value={SignUpUsername}
-              onChange={(e) => setSignUpUsername(e.target.value)}
-              required
-              toogleMask
-            />
+    <>
+      <TopNavBar/>
+      <div className="login-sign-up-body">
+        <ToastContainer theme="dark" position="top-right" autoClose={1500} />
+        <div
+          className={`login-container ${
+            isRightPanelActive ? "right-panel-active" : ""
+          }`}
+          id="login-container"
+        >
+          <div className="login-form-container sign-up-container">
+            <form className="login-form" onSubmit={handleSignUpSubmit}>
+              <h1 className="login-h1" style={{ margin: "1rem" }}>
+                Create new account
+              </h1>
+              <input
+                className="login-input"
+                type="text"
+                placeholder="Full Name"
+                value={SignUpFullName}
+                onChange={(e) => setSignUpFullName(e.target.value)}
+                required
+              />
+              <input
+                className="login-input"
+                type="email"
+                placeholder="Email"
+                value={SignUpEmail}
+                onChange={(e) => setSignUpEmail(e.target.value)}
+                required
+              />
+              <input
+                className="login-input"
+                type="text"
+                placeholder="Create a Username"
+                value={SignUpUsername}
+                onChange={(e) => setSignUpUsername(e.target.value)}
+                required
+                toogleMask
+              />
 
-            <Password
-              placeholder="Create a password"
-              value={SignUpPassword}
-              onChange={(e) => setSignUpPassword(e.target.value)}
-              header={header}
-              footer={footer}
-              toggleMask
-              required
-            />
+              <Password
+                placeholder="Create a password"
+                value={SignUpPassword}
+                onChange={(e) => setSignUpPassword(e.target.value)}
+                header={header}
+                footer={footer}
+                toggleMask
+                required
+              />
 
-            <Password
-              placeholder="Confirm Password"
-              value={SignUpConfirmPassword}
-              onChange={(e) => setSignUpConfirmPassword(e.target.value)}
-              header={header}
-              footer={footer}
-              toggleMask
-              required
-            />
+              <Password
+                placeholder="Confirm Password"
+                value={SignUpConfirmPassword}
+                onChange={(e) => setSignUpConfirmPassword(e.target.value)}
+                header={header}
+                footer={footer}
+                toggleMask
+                required
+              />
 
-            {/* Country Dropdown */}
-            <select
-              className="login-input"
-              value={selectedCountry}
-              onChange={handleCountryChange}
-              required
-            >
-              <option value=""> Select Country </option>
-              {countries.map((country, index) => (
-                <option key={index} value={country.name}>
-                  {country.name}
-                </option>
-              ))}
-            </select>
-
-            <button
-              className="login-button"
-              type="submit"
-              style={{ margin: "1rem" }}
-            >
-              Sign Up
-            </button>
-          </form>
-        </div>
-
-        <div className="login-form-container login-sign-in-container">
-          <form className="login-form" onSubmit={handleLoginSubmit}>
-            <h1 className="login-h1" style={{ margin: "10px" }}>
-              Sign in
-            </h1>
-            <input
-              className="login-input"
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-            <input
-              className="login-input"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <a className="login-a" href="/forgot-password">
-              Forgot your password?
-            </a>
-            <button className="login-button" type="submit">
-              Sign In
-            </button>
-          </form>
-        </div>
-        <div className="overlay-container">
-          <div className="overlay">
-            <div className="overlay-panel overlay-left">
-              <h1 className="login-h1">Welcome Back !</h1>
-              <p className="login-p">
-                To keep connected with us please login with your personal info
-              </p>
-              <button
-                className="login-button ghost"
-                id="signIn"
-                onClick={handleSignInClick}
+              {/* Country Dropdown */}
+              <select
+                className="login-input"
+                value={selectedCountry}
+                onChange={handleCountryChange}
+                required
               >
-                Sign In
-              </button>
-            </div>
-            <div className="overlay-panel overlay-right">
-              <h1 className="login-h1">Hello, Friend !</h1>
-              <p className="login-p">
-                Enter your personal details and start journey with us
-              </p>
+                <option value=""> Select Country </option>
+                {countries.map((country, index) => (
+                  <option key={index} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
+
               <button
-                className="login-button ghost"
-                id="signUp"
-                onClick={handleSignUpClick}
+                className="login-button"
+                type="submit"
+                style={{ margin: "1rem" }}
               >
                 Sign Up
               </button>
+            </form>
+          </div>
+
+          <div className="login-form-container login-sign-in-container">
+            <form className="login-form" onSubmit={handleLoginSubmit}>
+              <h1 className="login-h1" style={{ margin: "10px" }}>
+                Sign in
+              </h1>
+              <input
+                className="login-input"
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+              <input
+                className="login-input"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <a className="login-a" href="/forgot-password">
+                Forgot your password?
+              </a>
+              <button className="login-button" type="submit">
+                Sign In
+              </button>
+            </form>
+          </div>
+          <div className="overlay-container">
+            <div className="overlay">
+              <div className="overlay-panel overlay-left">
+                <h1 className="login-h1">Welcome Back !</h1>
+                <p className="login-p">
+                  To keep connected with us please login with your personal info
+                </p>
+                <button
+                  className="login-button ghost"
+                  id="signIn"
+                  onClick={handleSignInClick}
+                >
+                  Sign In
+                </button>
+              </div>
+              <div className="overlay-panel overlay-right">
+                <h1 className="login-h1">Hello, Friend !</h1>
+                <p className="login-p">
+                  Enter your personal details and start journey with us
+                </p>
+                <button
+                  className="login-button ghost"
+                  id="signUp"
+                  onClick={handleSignUpClick}
+                >
+                  Sign Up
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

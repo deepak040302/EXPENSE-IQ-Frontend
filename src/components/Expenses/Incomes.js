@@ -17,6 +17,7 @@ export default function Incomes() {
   const { logout } = useAuth();
   const [incomes, setIncomes] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(true);
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
 
   const fetchIncomes = async () => {
     const token = localStorage.getItem("token");
@@ -27,7 +28,7 @@ export default function Incomes() {
 
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/get-incomes",
+        `${API_URL}/api/get-incomes`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -76,7 +77,7 @@ export default function Incomes() {
 
     try {
       const response = await fetch(
-        `http://localhost:8081/api/delete-income/${incomeId}`,
+        `${API_URL}/api/delete-income/${incomeId}`,
         {
           method: "DELETE",
           headers: {

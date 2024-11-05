@@ -17,6 +17,8 @@ export default function Expenses() {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const [isDataLoaded, setIsDataLoaded] = useState(true);
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
+
   const [expenses, setExpenses] = useState([
     {
       category: "Groceries",
@@ -39,7 +41,7 @@ export default function Expenses() {
 
     try {
       const response = await axios.get(
-        "http://localhost:8081/api/get-expenses",
+        `${API_URL}/api/get-expenses`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -94,7 +96,7 @@ export default function Expenses() {
     }
     try {
       const response = await fetch(
-        `http://localhost:8081/api/delete-expense/${expenseId}`,
+        `${API_URL}/api/delete-expense/${expenseId}`,
         {
           method: "DELETE",
           headers: {

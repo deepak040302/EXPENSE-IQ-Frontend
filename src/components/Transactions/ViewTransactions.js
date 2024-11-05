@@ -18,6 +18,8 @@ export default function ViewTransactions() {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    const API_URL = `${process.env.REACT_APP_API_URL}`;
+
     const fetchTransactions = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -27,7 +29,7 @@ export default function ViewTransactions() {
 
       try {
         const incomeResponse = await axios.get(
-          "http://localhost:8081/api/get-incomes",
+          `${API_URL}/api/get-incomes`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -35,7 +37,7 @@ export default function ViewTransactions() {
           }
         );
         const expenseResponse = await axios.get(
-          "http://localhost:8081/api/get-expenses",
+          `${API_URL}/api/get-expenses`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

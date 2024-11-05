@@ -6,11 +6,13 @@ import { useAuth } from "./AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
+import TopNavBar from "./TopNav";
 
 const LoginSignUpFormForSmallScreens = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [isSignup, setIsSignup] = useState(false);
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
 
   // Form states
   const [username, setUsername] = useState("");
@@ -108,7 +110,7 @@ const LoginSignUpFormForSmallScreens = () => {
 
     // Proceed with sign-up
     try {
-      const response = await fetch("http://localhost:8081/register", {
+      const response = await fetch(`${API_URL}/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -147,7 +149,7 @@ const LoginSignUpFormForSmallScreens = () => {
     // console.log("e ", loginData.username + " {{ " + loginData.password);
 
     try {
-      const response = await fetch("http://localhost:8081/login", {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData),
@@ -188,178 +190,181 @@ const LoginSignUpFormForSmallScreens = () => {
   };
 
   return (
-    <div className="login-signup-form">
-      <ToastContainer theme="dark" position="top-right" autoClose={1500} />
-      <div className="wrapper">
-        <div className="title-text">
-          <div
-            className="title login"
-            style={{ marginLeft: isSignup ? "-50%" : "0%" }}
-          >
-            Sign In
-          </div>
-          <div className="title signup">Sign Up</div>
-        </div>
-        <div className="form-container">
-          <div className="slide-controls">
-            <input
-              type="radio"
-              name="slide"
-              id="login"
-              checked={!isSignup}
-              readOnly
-            />
-            <input
-              type="radio"
-              name="slide"
-              id="signup"
-              checked={isSignup}
-              readOnly
-            />
-            <label
-              htmlFor="login"
-              className="slide login"
-              onClick={() => setIsSignup(false)}
-            >
-              Sign In
-            </label>
-            <label
-              htmlFor="signup"
-              className="slide signup"
-              onClick={() => setIsSignup(true)}
-            >
-              Sign Up
-            </label>
-            <div className="slider-tab"></div>
-          </div>
-          <div className="form-inner">
-            {/* Login Form */}
-            <form
-              onSubmit={handleLoginSubmit}
-              className="login"
+    <>
+      <TopNavBar/>
+      <div className="login-signup-form">
+        <ToastContainer theme="dark" position="top-right" autoClose={1500} />
+        <div className="wrapper">
+          <div className="title-text">
+            <div
+              className="title login"
               style={{ marginLeft: isSignup ? "-50%" : "0%" }}
             >
-              <div className="field">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="field">
-                <input
-                  type="password"
+              Sign In
+            </div>
+            <div className="title signup">Sign Up</div>
+          </div>
+          <div className="form-container">
+            <div className="slide-controls">
+              <input
+                type="radio"
+                name="slide"
+                id="login"
+                checked={!isSignup}
+                readOnly
+              />
+              <input
+                type="radio"
+                name="slide"
+                id="signup"
+                checked={isSignup}
+                readOnly
+              />
+              <label
+                htmlFor="login"
+                className="slide login"
+                onClick={() => setIsSignup(false)}
+              >
+                Sign In
+              </label>
+              <label
+                htmlFor="signup"
+                className="slide signup"
+                onClick={() => setIsSignup(true)}
+              >
+                Sign Up
+              </label>
+              <div className="slider-tab"></div>
+            </div>
+            <div className="form-inner">
+              {/* Login Form */}
+              <form
+                onSubmit={handleLoginSubmit}
+                className="login"
+                style={{ marginLeft: isSignup ? "-50%" : "0%" }}
+              >
+                <div className="field">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="field">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                </div>
+                {/* <button type="submit">Sign In</button> */}
+                <div className="pass-link">
+                  <a href="/forgot-password">Forgot password?</a>
+                </div>
+                <div className="field btn">
+                  <div className="btn-layer"></div>
+                  <input type="submit" value="Login" />
+                </div>
+                <div className="signup-link">
+                  Not a member? <br />
+                  <br />
+                  No Worry !! , Enter your personal details and start journey
+                  with us <br />
+                  <br />
+                  <a
+                    href="/"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleSlideClick(true);
+                    }}
+                  >
+                    SignUp Now
+                  </a>
+                </div>
+              </form>
+
+              {/* Signup Form */}
+              <form onSubmit={handleSignUpSubmit} className="signup">
+                <div className="field">
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    value={SignUpFullName}
+                    onChange={(e) => setSignUpFullName(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="field">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={SignUpEmail}
+                    onChange={(e) => setSignUpEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="field">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    value={SignUpUsername}
+                    onChange={(e) => setSignUpUsername(e.target.value)}
+                    required
+                  />
+                </div>
+
+                <Password
+                  className="custom-password"
                   placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={SignUpPassword}
+                  onChange={(e) => setSignUpPassword(e.target.value)}
+                  header={header}
+                  footer={footer}
                   required
+                  toggleMask
                 />
-              </div>
-              {/* <button type="submit">Sign In</button> */}
-              <div className="pass-link">
-                <a href="/forgot-password">Forgot password?</a>
-              </div>
-              <div className="field btn">
-                <div className="btn-layer"></div>
-                <input type="submit" value="Login" />
-              </div>
-              <div className="signup-link">
-                Not a member? <br />
-                <br />
-                No Worry !! , Enter your personal details and start journey with
-                us <br />
-                <br />
-                <a
-                  href="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleSlideClick(true);
-                  }}
-                >
-                  SignUp Now
-                </a>
-              </div>
-            </form>
 
-            {/* Signup Form */}
-            <form onSubmit={handleSignUpSubmit} className="signup">
-              <div className="field">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={SignUpFullName}
-                  onChange={(e) => setSignUpFullName(e.target.value)}
+                <Password
+                  className="custom-password"
+                  placeholder="Confirm Password"
+                  value={SignUpConfirmPassword}
+                  onChange={(e) => setSignUpConfirmPassword(e.target.value)}
+                  style={{ marginTop: "-0.3rem" }}
+                  header={header}
+                  footer={footer}
                   required
+                  toggleMask
                 />
-              </div>
-              <div className="field">
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={SignUpEmail}
-                  onChange={(e) => setSignUpEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="field">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  value={SignUpUsername}
-                  onChange={(e) => setSignUpUsername(e.target.value)}
-                  required
-                />
-              </div>
 
-              <Password
-                className="custom-password"
-                placeholder="Password"
-                value={SignUpPassword}
-                onChange={(e) => setSignUpPassword(e.target.value)}
-                header={header}
-                footer={footer}
-                required
-                toggleMask
-              />
+                <div className="field">
+                  <select
+                    value={selectedCountry}
+                    onChange={handleCountryChange}
+                    style={{ backgroundColor: "white", marginTop: "-0.3rem" }}
+                  >
+                    <option value="">Select Country</option>
+                    {countries.map((country, index) => (
+                      <option key={index} value={country.name}>
+                        {country.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-              <Password
-                className="custom-password"
-                placeholder="Confirm Password"
-                value={SignUpConfirmPassword}
-                onChange={(e) => setSignUpConfirmPassword(e.target.value)}
-                style={{ marginTop: "-0.3rem" }}
-                header={header}
-                footer={footer}
-                required
-                toggleMask
-              />
-
-              <div className="field">
-                <select
-                  value={selectedCountry}
-                  onChange={handleCountryChange}
-                  style={{ backgroundColor: "white", marginTop: "-0.3rem" }}
-                >
-                  <option value="">Select Country</option>
-                  {countries.map((country, index) => (
-                    <option key={index} value={country.name}>
-                      {country.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="field btn">
-                <div className="btn-layer"></div>
-                <input type="submit" value="Create New Account" />
-              </div>
-            </form>
+                <div className="field btn">
+                  <div className="btn-layer"></div>
+                  <input type="submit" value="Create New Account" />
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

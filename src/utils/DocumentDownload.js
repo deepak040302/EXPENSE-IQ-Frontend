@@ -1,17 +1,18 @@
 export const handleDownload = async (id, transactionType, fileName) => {
   const token = localStorage.getItem("token");
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
 
   try {
     let response = "";
 
     if (transactionType === "Income") {
-      response = await fetch(`http://localhost:8081/api/income-doc/${id}`, {
+      response = await fetch(`${API_URL}/api/income-doc/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
     } else {
-      response = await fetch(`http://localhost:8081/api/expense-doc/${id}`, {
+      response = await fetch(`${API_URL}/api/expense-doc/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

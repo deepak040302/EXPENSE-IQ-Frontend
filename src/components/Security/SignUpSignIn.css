@@ -6,6 +6,7 @@
 }
 
 .login-sign-up-body {
+  margin-top: 2rem;
   background: #111827;
   background: -webkit-linear-gradient(to right, #111827, #111827);
   background: linear-gradient(to right, #111827, #111827);

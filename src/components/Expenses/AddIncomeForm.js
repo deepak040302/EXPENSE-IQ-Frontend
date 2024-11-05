@@ -11,6 +11,7 @@ import { useAuth } from "../Security/AuthProvider";
 
 export default function AddIncomeForm() {
   const { logout , loogedInUsername} = useAuth();
+  const API_URL = `${process.env.REACT_APP_API_URL}`;
 
   const initialFormData = {
     subject: "",
@@ -63,7 +64,7 @@ export default function AddIncomeForm() {
     
     
     try {
-      const response = await fetch("http://localhost:8081/api/add-income", {
+      const response = await fetch(`${API_URL}/api/add-income`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
