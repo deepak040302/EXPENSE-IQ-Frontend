@@ -191,7 +191,7 @@ const LoginSignUpFormForSmallScreens = () => {
 
   return (
     <>
-      <TopNavBar/>
+      <TopNavBar />
       <div className="login-signup-form">
         <ToastContainer theme="dark" position="top-right" autoClose={1500} />
         <div className="wrapper">
